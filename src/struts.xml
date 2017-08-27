@@ -4,8 +4,11 @@
     "http://struts.apache.org/dtds/struts-2.0.dtd">
 
 <struts>
+	<!-- 编码为utf8 -->
   <constant name="struts.i18n.encoding" value="UTF-8"></constant>
+  <!-- 对象交给sping管理 -->
   <constant name="struts.objectFactory" value="spring"/>
+  <!-- 使用basicstructs，和action里的对应 -->
   <package name="basicstruts" extends="struts-default">
         
  </package>

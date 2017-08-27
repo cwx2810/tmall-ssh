@@ -14,7 +14,7 @@
    http://www.springframework.org/schema/context      
    http://www.springframework.org/schema/context/spring-context-3.0.xsd">
  
- 	
+ 	<!-- 启动注解配置 -->
  	<context:annotation-config />
 	<context:component-scan base-package="tmall" />
  	<tx:annotation-driven transaction-manager="transactionManager"/>
@@ -46,7 +46,7 @@
 		</property>
 	</bean>    
         
-        
+    <!-- 配置数据库驱动 -->    
     <bean name="ds"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
