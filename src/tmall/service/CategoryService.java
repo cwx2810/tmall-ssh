@@ -10,4 +10,5 @@ public interface CategoryService {
 	public int total();
 
 	public List<Category> listByPage(Page page);
+	public void save(Category category);
 }
