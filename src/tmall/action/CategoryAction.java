@@ -79,7 +79,13 @@ public class CategoryAction {
         //返回页面
         return "listCategoryPage";
     }  
-	
+	//把对路径的访问映射到delete方法上
+    public String delete(){
+    	//通过service删除对象
+    	categoryService.delete(category);
+    	//客户端跳转
+    	return "listCategoryPage";
+    }
 	
 	
 	//获取放到categorys的数据，向返回页面传递数据
