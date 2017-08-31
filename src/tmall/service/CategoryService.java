@@ -11,4 +11,6 @@ public interface CategoryService {
 	public List<Category> listByPage(Page page);
 	public void save(Category category);
 	public void delete(Category category);
+	public Category get(Class clazz,int id);
+	public void update(Category category);
 }

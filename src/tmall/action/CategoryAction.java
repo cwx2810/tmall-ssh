@@ -28,6 +28,7 @@ import tmall.util.Page;
 			//定义返回到哪个页面
 			@Result(name="listCategory", location="/admin/listCategory.jsp"),
 			@Result(name="listCategoryPage", type = "redirect", location="/admin_category_list"),
+			@Result(name="editCategory", location="/admin/editCategory.jsp"),
 		})
 public class CategoryAction {
 	//自动注入service访问实体类
@@ -80,12 +81,48 @@ public class CategoryAction {
         return "listCategoryPage";
     }  
 	//把对路径的访问映射到delete方法上
+    @Action("admin_category_delete")
     public String delete(){
     	//通过service删除对象
     	categoryService.delete(category);
     	//客户端跳转
     	return "listCategoryPage";
     }
+    //把对路径的访问映射到edit方法上
+    @Action("admin_category_edit")
+    public String edit() {
+    	//获取id
+        int id = category.getId();
+        //根据id获取对象，即根据浏览器提交的id信息在数据库中查找对应分类名称
+        category = categoryService.get(Category.class,id);
+        //服务端跳转
+        return "editCategory";
+    }
+    @Action("admin_category_update")
+    public String update() {
+    	//更新category对象
+        categoryService.update(category);
+        //当发现上传了图片，要进行单独的图片更新，为什么这里图片单独处理不一起处理，因为更新有可能不上传图片，只改名字
+        if(null!=img){
+        	//获取路径
+            File  imageFolder= new File(ServletActionContext.getServletContext().getRealPath("img/category"));
+            //根据id计算图片名称
+            File file = new File(imageFolder,category.getId()+".jpg");
+            try {
+            	//复制上传的图片到id.jpg
+                FileUtils.copyFile(img, file);
+                //确保图片是jpg格式
+                BufferedImage img = ImageUtil.change2jpg(file);
+                ImageIO.write(img, "jpg", file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }           
+        }
+        //客户端跳转
+        return "listCategoryPage";
+    } 
+    
+    
 	
 	
 	//获取放到categorys的数据，向返回页面传递数据
