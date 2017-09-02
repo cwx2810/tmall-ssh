@@ -94,7 +94,8 @@ public class CategoryAction {
     	//获取id
         int id = category.getId();
         //根据id获取对象，即根据浏览器提交的id信息在数据库中查找对应分类名称
-        category = categoryService.get(Category.class,id);
+//        category = categoryService.get(Category.class,id);
+        category = (Category)categoryService.get(id);
         //服务端跳转
         return "editCategory";
     }
