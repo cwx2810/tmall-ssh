@@ -3,48 +3,18 @@ package tmall.action;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.ParentPackage;
-import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.convention.annotation.Results;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import tmall.pojo.Category;
-import tmall.service.CategoryService;
 import tmall.util.ImageUtil;
 import tmall.util.Page;
 
-@Namespace("/")
-@ParentPackage("basicstruts")  
-@Results(
-		{
-			//定义返回到哪个页面
-			@Result(name="listCategory", location="/admin/listCategory.jsp"),
-			@Result(name="listCategoryPage", type = "redirect", location="/admin_category_list"),
-			@Result(name="editCategory", location="/admin/editCategory.jsp"),
-		})
-public class CategoryAction {
-	//自动注入service访问实体类
-	@Autowired 
-	CategoryService categoryService;
-	//将通过service获取到的实体类保存在categorys，先初始化之
-	List<Category> categorys;
-	//初始化分类，以接受浏览器传过来的分类
-	Category category;
-	//初始化图片，以接受浏览器传过来的图片
-	File img;
-	//分页
-	Page page;
-	
-	
-	
+public class CategoryAction extends Action4Result{
+
 	//把对路径的访问映射到list方法上
 	@Action("admin_category_list")
 	public String list() {
@@ -56,7 +26,7 @@ public class CategoryAction {
 		//给new的对象设置总数
 		page.setTotal(total);
 		
-		categorys = categoryService.list();
+		categorys = categoryService.listByPage(page);
 		return "listCategory";
 	}
 	//把对路径的访问映射到add方法上
@@ -88,17 +58,13 @@ public class CategoryAction {
     	//客户端跳转
     	return "listCategoryPage";
     }
-    //把对路径的访问映射到edit方法上
+    //把对路径的访问映射到edit方法上，edit只能保证点编辑有反应，不能修改
     @Action("admin_category_edit")
     public String edit() {
-    	//获取id
-        int id = category.getId();
-        //根据id获取对象，即根据浏览器提交的id信息在数据库中查找对应分类名称
-//        category = categoryService.get(Category.class,id);
-        category = (Category)categoryService.get(id);
-        //服务端跳转
+        t2p(category);
         return "editCategory";
     }
+    //把对路径的访问映射到update方法上，配合edit实现修改
     @Action("admin_category_update")
     public String update() {
     	//更新category对象
@@ -122,35 +88,4 @@ public class CategoryAction {
         //客户端跳转
         return "listCategoryPage";
     } 
-    
-    
-	
-	
-	//获取放到categorys的数据，向返回页面传递数据
-	public List<Category> getCategorys() {
-		return categorys;
-	}
-	//具体的把实体类放到categorys的方法
-	public void setCategorys(List<Category> categorys) {
-		this.categorys = categorys;
-	}
-	public Page getPage() {
-		return page;
-	}
-	public void setPage(Page page) {
-		this.page = page;
-	}
-	public Category getCategory() {
-		return category;
-	}
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-	public File getImg() {
-		return img;
-	}
-	public void setImg(File img) {
-		this.img = img;
-	}
-	
 }
