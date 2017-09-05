@@ -2,8 +2,10 @@ package tmall.service.impl;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
 import tmall.service.BaseService;
@@ -90,6 +92,45 @@ public class BaseServiceImpl extends ServiceDelegateDAO implements BaseService {
 			return 0;
 		Long result = l.get(0);
 		return result.intValue();
+	}
+
+	@Override
+	public List listByParent(Object parent) {
+		//根据反射获取父类对象的名称
+	    String parentName= parent.getClass().getSimpleName();
+	    //把第一个字母变小写
+	    String parentNameWithFirstLetterLower = StringUtils.uncapitalize(parentName);
+	    //通过委派把从父类获取到的子类对象付给数据库
+	    DetachedCriteria dc = DetachedCriteria.forClass(clazz);
+	    dc.add(Restrictions.eq(parentNameWithFirstLetterLower, parent));
+	    dc.addOrder(Order.desc("id"));
+	    return findByCriteria(dc);
+	}
+
+	@Override
+	public List list(Page page, Object parent) {
+		//分页在父类中查询子类集合，前面和查询父类中子类集合一样，最后加上分页
+	    String parentName= parent.getClass().getSimpleName();
+	    String parentNameWithFirstLetterLower = StringUtils.uncapitalize(parentName);
+	    DetachedCriteria dc = DetachedCriteria.forClass(clazz);
+	    dc.add(Restrictions.eq(parentNameWithFirstLetterLower, parent));
+	    dc.addOrder(Order.desc("id"));
+	    return findByCriteria(dc,page.getStart(),page.getCount());
+	}
+
+	@Override
+	public int total(Object parentObject) {
+	    String parentName= parentObject.getClass().getSimpleName();
+	    String parentNameWithFirstLetterLower = StringUtils.uncapitalize(parentName);
+	     
+	    String sqlFormat = "select count(*) from %s bean where bean.%s = ?";
+	    String hql = String.format(sqlFormat, clazz.getName(), parentNameWithFirstLetterLower);
+	     
+	    List<Long> l= this.find(hql,parentObject);
+	    if(l.isEmpty())
+	        return 0;
+	    Long result= l.get(0);
+	    return result.intValue();
 	}
 
 }

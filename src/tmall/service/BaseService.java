@@ -16,4 +16,9 @@ public interface BaseService {
     public List list();
     public List listByPage(Page page);
     public int total();
+    
+    //根据父类查询
+    public List listByParent(Object parent);
+    public List list(Page page,Object parent);
+    public int total(Object parentObject);
 }
