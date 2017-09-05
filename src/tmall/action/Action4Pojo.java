@@ -3,12 +3,15 @@ package tmall.action;
 import java.util.List;
 
 import tmall.pojo.Category;
+import tmall.pojo.Property;
 
 //提供实体对象的getter、setter
 public class Action4Pojo extends Action4Pagination{
     protected Category category;
+    protected Property property;
     
     protected List<Category> categorys;
+    protected List<Property> propertys;
     
     //对外提供get方法，让jsp获取
     public Category getCategory() {
@@ -26,4 +29,17 @@ public class Action4Pojo extends Action4Pagination{
     public void setCategorys(List<Category> categorys) {
         this.categorys = categorys;
     }
+	public Property getProperty() {
+		return property;
+	}
+	public void setProperty(Property property) {
+		this.property = property;
+	}
+	public List<Property> getPropertys() {
+		return propertys;
+	}
+	public void setPropertys(List<Property> propertys) {
+		this.propertys = propertys;
+	}
+    
 }
