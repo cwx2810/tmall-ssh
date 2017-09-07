@@ -22,6 +22,12 @@ public class ProductAction extends Action4Result {
         page.setParam("&category.id="+category.getId());
         //根据分页和分类对象获取产品集合
         products = productService.list(page,category);
+        
+        //有了image后新增代码，用于为每个产品设置展示图片
+        for (Product product : products) {
+            productImageService.setFirstProdutImage(product);
+        }
+        
         //引用持久化
         t2p(category);
         return "listProduct";
