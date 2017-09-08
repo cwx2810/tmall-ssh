@@ -1,6 +1,8 @@
 package tmall.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
@@ -131,6 +133,33 @@ public class BaseServiceImpl extends ServiceDelegateDAO implements BaseService {
 	        return 0;
 	    Long result= l.get(0);
 	    return result.intValue();
+	}
+
+	//多条件查询
+	@Override
+	public List list(Object... pairParms) {
+		//初始化哈希map
+        HashMap<String,Object> m = new HashMap<>();
+        //把参数取出来放到哈希map中，每偶数个放一次，因为是键值对
+        for (int i = 0; i < pairParms.length; i=i+2) 
+            m.put(pairParms[i].toString(), pairParms[i+1]);
+        //新建委派进行查询
+        DetachedCriteria dc = DetachedCriteria.forClass(clazz);
+        //按照哈希表中的键值对设置查询条件
+        Set<String> ks = m.keySet();
+        //遍历键值对查询
+        for (String key : ks) {
+        	//如果查到是空，添加给委派，这样写查询
+            if(null==m.get(key))
+                dc.add(Restrictions.isNull(key));
+            else
+            	//否则这样写查询
+                dc.add(Restrictions.eq(key, m.get(key)));
+        }
+        //按照id排序
+        dc.addOrder(Order.desc("id"));
+        //用委派中的方法执行查询，返回结果
+        return this.findByCriteria(dc);
 	}
 
 }
