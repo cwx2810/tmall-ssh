@@ -20,6 +20,7 @@ public class Category {
     
     String name;
     
+    //这两个瞬时对象用于显示首页顶部的导航分类和推荐商品
     @Transient
     List<Product> products;
     @Transient
