@@ -7,6 +7,7 @@ import tmall.pojo.Product;
 import tmall.pojo.ProductImage;
 import tmall.pojo.Property;
 import tmall.pojo.PropertyValue;
+import tmall.pojo.User;
 
 //提供实体对象的getter、setter
 public class Action4Pojo extends Action4Pagination{
@@ -15,6 +16,7 @@ public class Action4Pojo extends Action4Pagination{
     protected Product product;
     protected ProductImage productImage;
     protected PropertyValue propertyValue;
+    protected User user;
     
     protected List<Category> categorys;
     protected List<Property> propertys;
@@ -22,6 +24,7 @@ public class Action4Pojo extends Action4Pagination{
     protected List<ProductImage> productSingleImages;
     protected List<ProductImage> productDetailImages;
     protected List<PropertyValue> propertyValues;
+    protected List<User> users;
     
     //对外提供get方法，让jsp获取
     public Category getCategory() {
@@ -92,6 +95,18 @@ public class Action4Pojo extends Action4Pagination{
 	}
 	public void setPropertyValues(List<PropertyValue> propertyValues) {
 		this.propertyValues = propertyValues;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	public List<User> getUsers() {
+		return users;
+	}
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
     
 }

@@ -10,6 +10,7 @@ import tmall.service.ProductImageService;
 import tmall.service.ProductService;
 import tmall.service.PropertyService;
 import tmall.service.PropertyValueService;
+import tmall.service.UserService;
 
 //专门提供给action注入service
 public class Action4Service extends Action4Pojo{
@@ -23,6 +24,8 @@ public class Action4Service extends Action4Pojo{
     ProductImageService productImageService;
     @Autowired
     PropertyValueService propertyValueService;
+    @Autowired
+    UserService userService;
     /**
      * transient to persistent
      * 瞬时对象转换为持久对象
