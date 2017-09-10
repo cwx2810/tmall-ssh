@@ -3,6 +3,8 @@ package tmall.action;
 import java.util.List;
 
 import tmall.pojo.Category;
+import tmall.pojo.Order;
+import tmall.pojo.OrderItem;
 import tmall.pojo.Product;
 import tmall.pojo.ProductImage;
 import tmall.pojo.Property;
@@ -17,6 +19,8 @@ public class Action4Pojo extends Action4Pagination{
     protected ProductImage productImage;
     protected PropertyValue propertyValue;
     protected User user;
+    protected Order order;
+    protected OrderItem orderItem;
     
     protected List<Category> categorys;
     protected List<Property> propertys;
@@ -25,6 +29,8 @@ public class Action4Pojo extends Action4Pagination{
     protected List<ProductImage> productDetailImages;
     protected List<PropertyValue> propertyValues;
     protected List<User> users;
+    protected List<Order> orders;
+    protected List<OrderItem> orderItems;
     
     //对外提供get方法，让jsp获取
     public Category getCategory() {
@@ -107,6 +113,30 @@ public class Action4Pojo extends Action4Pagination{
 	}
 	public void setUsers(List<User> users) {
 		this.users = users;
+	}
+	public Order getOrder() {
+		return order;
+	}
+	public void setOrder(Order order) {
+		this.order = order;
+	}
+	public List<Order> getOrders() {
+		return orders;
+	}
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
+	}
+	public OrderItem getOrderItem() {
+		return orderItem;
+	}
+	public void setOrderItem(OrderItem orderItem) {
+		this.orderItem = orderItem;
+	}
+	public List<OrderItem> getOrderItems() {
+		return orderItems;
+	}
+	public void setOrderItems(List<OrderItem> orderItems) {
+		this.orderItems = orderItems;
 	}
     
 }

@@ -6,6 +6,8 @@ import org.apache.commons.lang3.text.WordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import tmall.service.CategoryService;
+import tmall.service.OrderItemService;
+import tmall.service.OrderService;
 import tmall.service.ProductImageService;
 import tmall.service.ProductService;
 import tmall.service.PropertyService;
@@ -26,6 +28,10 @@ public class Action4Service extends Action4Pojo{
     PropertyValueService propertyValueService;
     @Autowired
     UserService userService;
+    @Autowired
+    OrderService orderService;  
+    @Autowired
+    OrderItemService orderItemService;
     /**
      * transient to persistent
      * 瞬时对象转换为持久对象
