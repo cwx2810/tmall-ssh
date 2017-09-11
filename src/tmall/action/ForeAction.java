@@ -72,4 +72,15 @@ public class ForeAction extends Action4Result {
         return "product.jsp";           
     }
 	
+	//跳转到产品列表页
+	@Action("forecategory")
+	public String category(){
+		//持久化分类
+	    t2p(category);
+	    //填充产品到分类
+	    productService.fill(category);      
+	    //服务端跳转
+	    return "category.jsp";          
+	}
+	
 }
