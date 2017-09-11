@@ -6,6 +6,7 @@ import org.springframework.web.util.HtmlUtils;
 import com.opensymphony.xwork2.ActionContext;
 
 import tmall.pojo.User;
+import tmall.service.ProductImageService;
 
 public class ForeAction extends Action4Result {
 	
@@ -50,5 +51,25 @@ public class ForeAction extends Action4Result {
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
+	
+	//首页跳转产品页
+	@Action("foreproduct")
+    public String product() {
+		
+		//持久化产品
+        t2p(product);
+        //设置首张图  
+        productImageService.setFirstProdutImage(product);
+        //设置单个、详情图
+        productSingleImages = productImageService.list("product",product,"type", ProductImageService.type_single);
+        productDetailImages = productImageService.list("product",product,"type", ProductImageService.type_detail);
+        product.setProductSingleImages(productSingleImages);
+        product.setProductDetailImages(productDetailImages);
+        //获取产品属性值集合  
+        propertyValues = propertyValueService.listByParent(product);       
+      
+        //服务端跳转到产品列表页面
+        return "product.jsp";           
+    }
 	
 }
