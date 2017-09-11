@@ -10,6 +10,14 @@
   <constant name="struts.objectFactory" value="spring"/>
   <!-- 使用basicstructs，和action里的对应 -->
   <package name="basicstruts" extends="struts-default">
-        
+        <interceptors>    
+            <interceptor name="authorityInterceptor" class="tmall.interceptor.AuthInterceptor"></interceptor>    
+            <!-- 拦截器栈 -->    
+            <interceptor-stack name="auth-default">    
+                <interceptor-ref name="authorityInterceptor" />    
+                <interceptor-ref name="defaultStack" />    
+            </interceptor-stack>    
+        </interceptors>   
+        <default-interceptor-ref name="auth-default"></default-interceptor-ref>
  </package>
 </struts>
